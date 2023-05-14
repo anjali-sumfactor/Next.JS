@@ -12,7 +12,8 @@ const getUrlForCoffeeStores = (latLong, query, limit) => {
 async function getListOfCoffeeStoresPhotos() {
     const photos = await unsplash.search.getPhotos({
         query: 'coffee shop',
-        perPage: 30,
+        page: 1,
+        perPage: 40,
     });
 
     const unsplashResults = photos.response.results
