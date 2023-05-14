@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import { useRouter, useContext, useState, useEffect } from "next/router";
 import Link from "next/link";
 import Head from 'next/head';
 import Image from 'next/image';
@@ -9,8 +9,8 @@ import coffeeStoresData from '../../data/coffee-stores.json';
 import { fetchCoffeeStores } from "@/lib/coffee-store";
 
 import styles from '../../styles/coffee-stores.module.css';
-import { useContext, useEffect, useState } from "react";
-import { StoreContext } from "../_app";
+
+import { StoreContext } from "../../store/store-context";
 
 import { isEmpty } from "@/utils";
 
@@ -19,7 +19,7 @@ export async function getStaticProps(staticProps) {
     const coffeeStores = await fetchCoffeeStores();
     const findCoffeeStoreById = coffeeStores.find(coffeeStore => {
         return coffeeStore.id.toString() === params.id; //dynamic id
-    })
+    });
 
     return {
         props: {
@@ -47,25 +47,20 @@ export async function getStaticPaths() {
 export default function CoffeeStore(initialProps) {
     const router = useRouter();
     console.log("router", router);
-
-    const { address, name, formatted_address, imgUrl } = coffeeStore;
+    // console.log('props', props);
 
     if (router.isFallback) return <div>Loading...</div>
 
-    console.log({ initialProps });
-
-    const handleUpvoteButton = () => {
-        console.log("handle upvote");
-    }
-
     const id = router.query.id;
 
-    const [coffeeStore, setCoffeeStore] = useState(initialProps.coffeeStore);
+    const [coffeeSore, setCoffeeStore] = useState(initialProps.coffeeStore);
 
-    const { state: { coffeeStores } } = useContext(StoreContext);
+    const {
+        state: { coffeeStores },
+    } = useContext(StoreContext);
 
     useEffect(() => {
-        if (isEmpty(initialProps)) {
+        if (isEmpty(initialProps.coffeeStore)) {
             if (coffeeStores.length > 0) {
                 const findCoffeeStoreById = coffeeStores.find(coffeeStore => {
                     return coffeeStore.id.toString() === id; //dynamic id
@@ -74,6 +69,13 @@ export default function CoffeeStore(initialProps) {
             }
         }
     }, [id]);
+
+    const { address, name, formatted_address, imgUrl } = coffeeSore;
+
+
+    const handleUpvoteButton = () => {
+        console.log("handle upvote");
+    }
 
     return (
         <>

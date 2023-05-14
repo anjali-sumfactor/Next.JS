@@ -9,7 +9,7 @@ import styles from '@/styles/Home.module.css';
 import { fetchCoffeeStores } from '@/lib/coffee-store';
 import useTrackLocation from "../hooks/use-track-location";
 import { useEffect, useState, useContext } from 'react';
-import { ACTION_TYPES, StoreContext } from "./_app";
+import { ACTION_TYPES, StoreContext } from "../store/store-context";
 
 export async function getStaticProps() {
   const coffeeStores = await fetchCoffeeStores();
