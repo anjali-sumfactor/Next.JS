@@ -12,7 +12,7 @@ import styles from '../../styles/coffee-stores.module.css';
 
 import { StoreContext } from "../../store/store-context";
 
-import { isEmpty } from "@/utils";
+// import { isEmpty } from "@/utils";
 
 export async function getStaticProps(staticProps) {
     const params = staticProps.params;
@@ -53,25 +53,24 @@ export default function CoffeeStore(initialProps) {
 
     const id = router.query.id;
 
-    const [coffeeSore, setCoffeeStore] = useState(initialProps.coffeeStore);
+    // const [coffeeSore, setCoffeeStore] = useState(initialProps.coffeeStore);
 
-    const {
-        state: { coffeeStores },
-    } = useContext(StoreContext);
+    // const {
+    //     state: { coffeeStores },
+    //   } = useContext(StoreContext);
 
-    useEffect(() => {
-        if (isEmpty(initialProps.coffeeStore)) {
-            if (coffeeStores.length > 0) {
-                const findCoffeeStoreById = coffeeStores.find(coffeeStore => {
-                    return coffeeStore.id.toString() === id; //dynamic id
-                });
-                setCoffeeStore(findCoffeeStoreById);
-            }
-        }
-    }, [id]);
+    // useEffect(() => {
+    //     if (isEmpty(initialProps.coffeeStore)) {
+    //         if (coffeeStores.length > 0) {
+    //             const findCoffeeStoreById = coffeeStores.find(coffeeStore => {
+    //                 return coffeeStore.id.toString() === id; //dynamic id
+    //             });
+    //             setCoffeeStore(findCoffeeStoreById);
+    //         }
+    //     }
+    // }, [id]);
 
-    const { address, name, formatted_address, imgUrl } = coffeeSore;
-
+    const { address, name, formatted_address, imgUrl } = initialProps;
 
     const handleUpvoteButton = () => {
         console.log("handle upvote");
