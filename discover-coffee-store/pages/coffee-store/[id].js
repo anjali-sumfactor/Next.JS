@@ -4,13 +4,13 @@ import Head from 'next/head';
 import Image from 'next/image';
 import cls from 'classnames';
 
-import coffeeStoresData from '../../data/coffee-stores.json';
+// import coffeeStoresData from '../../data/coffee-stores.json';
 
 import { fetchCoffeeStores } from "@/lib/coffee-store";
 
 import styles from '../../styles/coffee-stores.module.css';
 
-import { StoreContext } from "../../store/store-context";
+// import { StoreContext } from "../../store/store-context";
 
 // import { isEmpty } from "@/utils";
 
@@ -59,6 +59,27 @@ export default function CoffeeStore(initialProps) {
     //     state: { coffeeStores },
     //   } = useContext(StoreContext);
 
+    const handleCreateCoffeeStores = async () => {
+        try {
+            const data = {
+                id,
+                name,
+                voting,
+                imgUrl,
+                address,
+                neighbourhood,
+            }
+            const response = await fetch('/api/createCoffeeStore', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+        } catch (err) {
+            console.error('Error creating coffee store', err);
+        }
+    }
     // useEffect(() => {
     //     if (isEmpty(initialProps.coffeeStore)) {
     //         if (coffeeStores.length > 0) {
