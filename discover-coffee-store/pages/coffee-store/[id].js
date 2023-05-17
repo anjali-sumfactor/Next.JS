@@ -53,11 +53,11 @@ export default function CoffeeStore(initialProps) {
 
     const id = router.query.id;
 
-    // const [coffeeSore, setCoffeeStore] = useState(initialProps.coffeeStore);
+    // const [coffeeStore, setCoffeeStore] = useState(initialProps.coffeeStore);
 
     // const {
     //     state: { coffeeStores },
-    //   } = useContext(StoreContext);
+    // } = useContext(StoreContext);
 
     const handleCreateCoffeeStores = async () => {
         try {
@@ -93,8 +93,12 @@ export default function CoffeeStore(initialProps) {
 
     const { address, name, formatted_address, imgUrl } = initialProps;
 
+    const [votingCount, setVotingCount] = useState(1);
+
     const handleUpvoteButton = () => {
         console.log("handle upvote");
+        let count = votingCount + 1;
+        setVotingCount(count);
     }
 
     return (
@@ -132,7 +136,7 @@ export default function CoffeeStore(initialProps) {
 
                         <div className={styles.iconWrapper}>
                             <Image src="/static/icons/star.svg" width="24" height="24"></Image>
-                            <p className={styles.text}>1</p>
+                            <p className={styles.text}>{votingCount}</p>
                         </div>
                         <button className={styles.upvoteButton} onClick={handleUpvoteButton}>Up vote!</button>
                     </div>
