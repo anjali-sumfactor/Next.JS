@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import cls from 'classnames';
 import { useRouter } from "next/router";
+import useSWR from 'swr';
 
 // import coffeeStoresData from '../../data/coffee-stores.json';
 
@@ -110,10 +111,23 @@ export default function CoffeeStore(initialProps) {
 
     const [votingCount, setVotingCount] = useState(1);
 
+    const { data, error } = useSWR(`/api/getCoffeeStoreById?id=${id}`);
+
+    useEffect(() => {
+        if (data && data.length > 0) {
+            console.log('data from SWR', data);
+            setCoffeeStore(data[0]);
+        }
+    }, [data]);
+
     const handleUpvoteButton = () => {
         console.log("handle upvote");
         let count = votingCount + 1;
         setVotingCount(count);
+    }
+
+    if (error) {
+        return <div>Something went wrong retrieving coffee store page</div>
     }
 
     return (
@@ -136,21 +150,21 @@ export default function CoffeeStore(initialProps) {
                     <div className={cls("glass", styles.col2)}>
                         {address && (
                             <div className={styles.iconWrapper}>
-                                <Image src="/static/icons/places.svg" width="24" height="24"></Image>
+                                <Image src="/static/icons/places.svg" width="24" height="24" alt={name}></Image>
                                 <p className={styles.text}>{address}</p>
                             </div>
                         )}
 
                         {formatted_address && (
                             <div className={styles.iconWrapper}>
-                                <Image src="/static/icons/nearMe.svg" width="24" height="24"></Image>
+                                <Image src="/static/icons/nearMe.svg" width="24" height="24" alt={name}></Image>
                                 <p className={styles.text}>{formatted_address
                                 }</p>
                             </div>
                         )}
 
                         <div className={styles.iconWrapper}>
-                            <Image src="/static/icons/star.svg" width="24" height="24"></Image>
+                            <Image src="/static/icons/star.svg" width="24" height="24" alt={name}></Image>
                             <p className={styles.text}>{votingCount}</p>
                         </div>
                         <button className={styles.upvoteButton} onClick={handleUpvoteButton}>Up vote!</button>
