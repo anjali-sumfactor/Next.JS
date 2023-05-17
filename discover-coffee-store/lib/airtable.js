@@ -7,10 +7,10 @@ const getMinifiedRecord = (record) => {
     return {
         ...record.fields,
     };
-}
+};
 
 const getMinifiedRecords = (records) => {
     return records.map((record) => getMinifiedRecord(record));
-}
+};
 
 export { table, getMinifiedRecords };
