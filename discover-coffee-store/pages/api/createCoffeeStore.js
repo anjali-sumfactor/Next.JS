@@ -8,7 +8,16 @@ const createCoffeeStore = async (req, res) => {
         const { id, name, address, neighbourhood, imgUrl, voting } = req.body;
         try {
             if (id) {
+<<<<<<< HEAD
                 const records = await findRecordByFilter(id);
+=======
+                const findCoffeeStoreRecords = await table.select({
+                    filterByFormula: `id="${id}"`,
+                }).firstPage();
+
+                if (findCoffeeStoreRecords.length !== 0) {
+                    const records = getMinifiedRecords(findCoffeeStoreRecords);
+>>>>>>> 2164a40c85276331c5ffa9d3ad01f86b639bc947
 
                 if (records.length !== 0) {
                     res.json(records);
