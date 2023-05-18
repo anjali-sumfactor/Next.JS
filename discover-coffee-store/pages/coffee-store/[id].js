@@ -18,7 +18,7 @@ export async function getStaticProps(staticProps) {
     const params = staticProps.params;
     const coffeeStores = await fetchCoffeeStores();
     const findCoffeeStoreById = coffeeStores.find(coffeeStore => {
-        return coffeeStore.id.toString() === params.id;
+        return coffeeStore.id.toString() === params.id; //dynamic id
     });
 
     return {
@@ -60,11 +60,7 @@ export default function CoffeeStore(initialProps) {
     const handleCreateCoffeeStores = async (coffeeStore) => {
         try {
             const { id, name, voting, imgUrl, address, neighbourhood,
-<<<<<<< HEAD
             } = coffeeStore;
-=======
-            } = coffeeStore
->>>>>>> 2164a40c85276331c5ffa9d3ad01f86b639bc947
 
             const response = await fetch('/api/createCoffeeStore', {
                 method: "POST",
@@ -80,14 +76,10 @@ export default function CoffeeStore(initialProps) {
                     neighbourhood: neighbourhood || "",
                 }),
             });
-<<<<<<< HEAD
+
             const dbCoffeeStore = await response.json();
-=======
+            console.log({ dbCoffeeStore });
 
-            const dbCoffeeStore = response.json();
-            console.log(dbCoffeeStore);
-
->>>>>>> 2164a40c85276331c5ffa9d3ad01f86b639bc947
         } catch (err) {
             console.error('Error creating coffee store', err);
         }
@@ -99,19 +91,6 @@ export default function CoffeeStore(initialProps) {
                 const coffeeStoreFromContext = coffeeStores.find(coffeeStore => {
                     return coffeeStore.id.toString() === id; //dynamic id
                 });
-<<<<<<< HEAD
-=======
-
-                if (coffeeStoreFromContext) {
-                    setCoffeeStore(coffeeStoreFromContext);
-                    handleCreateCoffeeStores(coffeeStoreFromContext);
-                }
-            }
-        }
-    }, [id]);
-
-    const { address, name, formatted_address, imgUrl } = coffeeStore;
->>>>>>> 2164a40c85276331c5ffa9d3ad01f86b639bc947
 
                 if (coffeeStoreFromContext) {
                     setCoffeeStore(coffeeStoreFromContext);
@@ -151,6 +130,7 @@ export default function CoffeeStore(initialProps) {
             });
 
             const dbCoffeeStore = await response.json();
+            console.log({ dbCoffeeStore });
 
             if (dbCoffeeStore && dbCoffeeStore.length > 0) {
                 let count = votingCount + 1;
