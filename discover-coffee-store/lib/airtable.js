@@ -5,6 +5,7 @@ const table = base("coffee-stores");
 
 const getMinifiedRecord = (record) => {
     return {
+        recordId: record.id,
         ...record.fields,
     };
 };
@@ -17,10 +18,7 @@ const findRecordByFilter = async (id) => {
     const findCoffeeStoreRecords = await table.select({
         filterByFormula: `id="${id}"`,
     }).firstPage();
-
-    if (findCoffeeStoreRecords.length !== 0) {
-        return getMinifiedRecords(findCoffeeStoreRecords);
-    }
+    return getMinifiedRecords(findCoffeeStoreRecords);
 };
 
 export { table, getMinifiedRecords, findRecordByFilter };
