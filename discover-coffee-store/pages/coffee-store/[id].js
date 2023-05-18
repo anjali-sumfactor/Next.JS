@@ -5,6 +5,7 @@ import Image from 'next/image';
 import cls from 'classnames';
 import { useRouter } from "next/router";
 import useSWR from 'swr';
+import { fetcher } from "@/lib/fetcher";
 
 import { fetchCoffeeStores } from "@/lib/coffee-store";
 
@@ -107,7 +108,7 @@ export default function CoffeeStore(initialProps) {
 
     const [votingCount, setVotingCount] = useState(0);
 
-    const { data, error } = useSWR(`/api/getCoffeeStoreById?id=${id}`);
+    const { data, error } = useSWR(`/api/getCoffeeStoreById?id=${id}`, fetcher);
 
     useEffect(() => {
         if (data && data.length > 0) {
