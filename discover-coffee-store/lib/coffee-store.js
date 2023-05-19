@@ -19,7 +19,6 @@ async function getListOfCoffeeStoresPhotos() {
     const unsplashResults = photos.response.results
 
     return unsplashResults.map((result) => result.urls["small"]);
-    // console.log({ unsplashResults });
 }
 
 export async function fetchCoffeeStores(latLong = "28.603561856411737,77.19362478225402", limit = 6) {
@@ -45,6 +44,4 @@ export async function fetchCoffeeStores(latLong = "28.603561856411737,77.1936247
             imgUrl: photos.length > 0 ? photos[idx] : "",
         }
     })
-    // console.log(data.results)
-    // .catch(err => console.error(err));
 }

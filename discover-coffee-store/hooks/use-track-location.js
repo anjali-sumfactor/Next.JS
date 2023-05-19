@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
+
 import { ACTION_TYPES, StoreContext } from "../store/store-context";
 
 export default function useTrackLocation() {
     const [locationErrorMsg, setLocationErrorMsg] = useState("");
-    // const [latLong, setLatLong] = useState("");
     const [isFindingLocation, setIsFindingLocation] = useState(false);
 
     const { dispatch } = useContext(StoreContext);
@@ -12,7 +12,6 @@ export default function useTrackLocation() {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
-        // setLatLong(`${latitude},${longitude}`);
         setLocationErrorMsg("");
         setIsFindingLocation(false);
         dispatch({
@@ -32,13 +31,11 @@ export default function useTrackLocation() {
             setLocationErrorMsg("Geolocation is not supported by your browser");
             setIsFindingLocation(false);
         } else {
-            // status.textContent = "Locating…";
             navigator.geolocation.getCurrentPosition(success, error);
         }
     };
 
     return {
-        // latLong,
         handleTrackLocation,
         locationErrorMsg,
         isFindingLocation,

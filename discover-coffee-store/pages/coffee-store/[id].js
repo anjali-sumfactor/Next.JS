@@ -5,21 +5,19 @@ import Image from 'next/image';
 import cls from 'classnames';
 import { useRouter } from "next/router";
 import useSWR from 'swr';
-import { fetcher } from "@/lib/fetcher";
 
+import { fetcher } from "@/lib/fetcher";
 import { fetchCoffeeStores } from "@/lib/coffee-store";
+import { StoreContext } from "../../store/store-context";
+import { isEmpty } from "@/utils";
 
 import styles from '../../styles/coffee-stores.module.css';
-
-import { StoreContext } from "../../store/store-context";
-
-import { isEmpty } from "@/utils";
 
 export async function getStaticProps(staticProps) {
     const params = staticProps.params;
     const coffeeStores = await fetchCoffeeStores();
     const findCoffeeStoreById = coffeeStores.find(coffeeStore => {
-        return coffeeStore.id.toString() === params.id; //dynamic id
+        return coffeeStore.id.toString() === params.id;
     });
 
     return {
@@ -60,7 +58,7 @@ export default function CoffeeStore(initialProps) {
 
     const handleCreateCoffeeStores = async (coffeeStore) => {
         try {
-            const { id, name, voting, imgUrl, address, neighbourhood,
+            const { id, name, imgUrl, address, neighbourhood,
             } = coffeeStore;
 
             const response = await fetch('/api/createCoffeeStore', {
@@ -77,10 +75,7 @@ export default function CoffeeStore(initialProps) {
                     neighbourhood: neighbourhood || "",
                 }),
             });
-
             const dbCoffeeStore = await response.json();
-            console.log({ dbCoffeeStore });
-
         } catch (err) {
             console.error('Error creating coffee store', err);
         }
@@ -90,7 +85,7 @@ export default function CoffeeStore(initialProps) {
         if (isEmpty(initialProps.coffeeStore)) {
             if (coffeeStores.length > 0) {
                 const coffeeStoreFromContext = coffeeStores.find(coffeeStore => {
-                    return coffeeStore.id.toString() === id; //dynamic id
+                    return coffeeStore.id.toString() === id;
                 });
 
                 if (coffeeStoreFromContext) {
@@ -112,7 +107,6 @@ export default function CoffeeStore(initialProps) {
 
     useEffect(() => {
         if (data && data.length > 0) {
-            console.log('data from SWR', data);
             setCoffeeStore(data[0]);
             setVotingCount(data[0].voting);
         }
@@ -131,7 +125,6 @@ export default function CoffeeStore(initialProps) {
             });
 
             const dbCoffeeStore = await response.json();
-            console.log({ dbCoffeeStore });
 
             if (dbCoffeeStore && dbCoffeeStore.length > 0) {
                 let count = votingCount + 1;
