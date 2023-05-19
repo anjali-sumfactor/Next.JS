@@ -33,7 +33,6 @@ const createCoffeeStore = async (req, res) => {
                     }
                 }
             }
-
             else {
                 res.status(400);
                 res.json({ message: "Id is missing" });
@@ -45,7 +44,6 @@ const createCoffeeStore = async (req, res) => {
             res.json({ message: "Error finding store", err });
         }
     }
-
     else {
         res.json({ message: "Method is GET" })
     }
